@@ -1,4 +1,4 @@
-let code = "";
+let code = localStorage.getItem("code");
 
 const startScreen = document.getElementById("startScreen");
 const partyScreen = document.getElementById("partyScreen");
@@ -28,11 +28,11 @@ createButton.addEventListener("click", async function () {
   saveParty(data);
 });
 
-window.addEventListener('DOMContentLoaded', (event) => {
-    if(localStorage.getItem("code") || code) showPartyScreen();
-})
-
 leaveButton.addEventListener("click", function () {
     localStorage.removeItem("code");
     location.reload();
 })
+
+if(localStorage.getItem("code") || code){
+    showPartyScreen();
+}
