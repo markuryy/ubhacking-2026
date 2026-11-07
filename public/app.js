@@ -3,6 +3,7 @@ let code = "";
 const startScreen = document.getElementById("startScreen");
 const partyScreen = document.getElementById("partyScreen");
 const createButton = document.getElementById("createButton");
+const leaveButton = document.getElementById("leaveButton");
 const codeText = document.getElementById("codeText");
 
 function showPartyScreen(){
@@ -29,4 +30,9 @@ createButton.addEventListener("click", async function () {
 
 window.addEventListener('DOMContentLoaded', (event) => {
     if(localStorage.getItem("code") || code) showPartyScreen();
+})
+
+leaveButton.addEventListener("click", function () {
+    localStorage.removeItem("code");
+    location.reload();
 })
