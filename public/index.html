@@ -7,6 +7,23 @@
 </head>
 <body>
   <h1>Let's go home?</h1>
+  <div id="startScreen">
+    <button id="createButton">Create party</button>
+    <p>or</p>
+    <input id="codeInput" placeholder="Party code">
+    <button id="joinButton">Join party</button>
+    <p id="errorText"></p>
+  </div>
+
+  <div id="partyScreen" style="display: none;">
+    <p>Party code: <b id="codeText"></b></p>
+    <label>
+      <input type="checkbox" id="readyCheckbox">
+      I'm ready to leave
+    </label>
+    <p id="statusText">Waiting...</p>
+    <button id="leaveButton">Leave this party</button>
+  </div>
   <script src="app.js"></script>
 </body>
 </html>
