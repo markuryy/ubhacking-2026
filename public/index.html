@@ -15,15 +15,18 @@
     <p id="errorText"></p>
   </div>
 
-  <div id="partyScreen" style="display: none;">
+  <div id="waitingScreen" style="display: none;">
+    <p>Waiting for another person to join...</p>
     <p>Party code: <b id="codeText"></b></p>
+
+  <div id="partyScreen" style="display: none;">
     <label>
       <input type="checkbox" id="readyCheckbox">
       I'm ready to leave
     </label>
-    <p id="statusText">Waiting...</p>
     <button id="leaveButton">Leave this party</button>
   </div>
+  
   <script src="app.js"></script>
 </body>
 </html>

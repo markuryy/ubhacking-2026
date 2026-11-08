@@ -5,12 +5,14 @@ const startScreen = document.getElementById("startScreen");
 const waitingScreen = document.getElementById("waitingScreen");
 const partyScreen = document.getElementById("partyScreen");
 const LGHScreen = document.getElementById("LGHScreen");
+
 const createButton = document.getElementById("createButton");
 const joinButton = document.getElementById("joinButton");
 const leaveButton = document.getElementById("leaveButton");
 const codeInput = document.getElementById("codeInput");
 const codeText = document.getElementById("codeText");
 const errorText = document.getElementById("errorText");
+
 
 function showWaitingScreen(){
     // show the waiting screen and hide the current start screen
@@ -23,7 +25,6 @@ function showPartyScreen(){
     // show the party screen and hide the current waiting screen
     waitingScreen.style.display = "none";
     partyScreen.style.display = "block";
-    codeText.textContent = localStorage.getItem("code");
 }
 
 function showLGHScreen(){
