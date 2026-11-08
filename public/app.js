@@ -1,4 +1,5 @@
 let code = localStorage.getItem("code");
+let token = localStorage.getItem("token");
 
 const startScreen = document.getElementById("startScreen");
 const partyScreen = document.getElementById("partyScreen");
@@ -6,6 +7,7 @@ const createButton = document.getElementById("createButton");
 const joinButton = document.getElementById("joinButton");
 const leaveButton = document.getElementById("leaveButton");
 const codeText = document.getElementById("codeText");
+const errorText = document.getElementById("errorText");
 
 function showPartyScreen(){
     // show the party screen and hide the current start screen
@@ -19,6 +21,7 @@ function saveParty(data){
     token = data.token;
     // save the code to local storage so it survives refresh
     localStorage.setItem("code", code);
+    localStorage.setItem("token", token);
     showPartyScreen();
 }
 
@@ -31,6 +34,7 @@ createButton.addEventListener("click", async function () {
 
 leaveButton.addEventListener("click", function () {
     localStorage.removeItem("code");
+    localStorage.removeItem("token");
     location.reload();
 })
 
@@ -48,6 +52,11 @@ joinButton.addEventListener("click", async function () {
   });
   const data = await response.json();
   console.log("Join response:", data);
+
+  if (data.error) {
+    errorText.textContent = data.error;
+    return;
+  }
 
   saveParty(data);
 });
