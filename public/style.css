@@ -7,7 +7,13 @@ body{
     text-align: center;
     font-family: Avenir, sans-serif;
     padding-top: 15vh;
+
+ /* peach frame around the whole screen */
+    margin: 0;
+    border: 3px solid #ffb86b;
+    box-sizing: border-box;
 }
+/* For every button inside every div */
 button{
 background-color: #ffb86b;
 color: #1e2a44;
@@ -49,6 +55,8 @@ box-shadow: 0 0 12px #ffb86b;
     opacity: 1;
   }
 }
+
+/* only the party code typing box, not the checkbox (that's an input too) */
 #codeInput {
   padding: 10px;
   border-radius: 20px;
@@ -79,4 +87,16 @@ box-shadow: 0 0 12px #ffb86b;
   font-size: 28px;
   color: #ffb86b;
   letter-spacing: 4px;
+}
+
+/* glowy card around each screen so it doesn't look so plain.
+   max-width keeps it from getting too wide on laptops,
+   margin auto keeps it centered */
+#startScreen, #waitingScreen, #partyScreen, #LGHScreen {
+  border: 1px solid #ffb86b;
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgba(255, 184, 107, 0.3);
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 20px;
 }
