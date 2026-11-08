@@ -51,7 +51,16 @@ async function checkStatus(){
     console.log("Status:", data);
 
     // the party is gone (e.g. server restarted)
-    // todo
+    if (!response.ok) {
+        localStorage.removeItem("code");
+        localStorage.removeItem("token");
+        code = null;
+        token = null;
+        hideAllScreens();
+        startScreen.style.display = "block";
+        errorText.textContent = "Your party ended. Create or join a new one.";
+        return;
+    }
 
     if (data.status === "no-friend") {
         showWaitingScreen();
