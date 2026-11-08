@@ -3,6 +3,7 @@ let code = localStorage.getItem("code");
 const startScreen = document.getElementById("startScreen");
 const waitingScreen = document.getElementById("waitingScreen");
 const partyScreen = document.getElementById("partyScreen");
+const LGHScreen = document.getElementById("LGHScreen");
 
 const createButton = document.getElementById("createButton");
 const joinButton = document.getElementById("joinButton");
@@ -21,6 +22,12 @@ function showPartyScreen(){
     waitingScreen.style.display = "none";
     partyScreen.style.display = "block";
     codeText.textContent = localStorage.getItem("code");
+}
+
+function showLGHScreen(){
+    // show the "let's go home" screen and hide the current party screen
+    partyScreen.style.display = "none";
+    LGHScreen.style.display = "block";
 }
 
 
