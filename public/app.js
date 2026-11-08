@@ -3,6 +3,7 @@ let code = localStorage.getItem("code");
 const startScreen = document.getElementById("startScreen");
 const partyScreen = document.getElementById("partyScreen");
 const createButton = document.getElementById("createButton");
+const joinButton = document.getElementById("joinButton");
 const leaveButton = document.getElementById("leaveButton");
 const codeText = document.getElementById("codeText");
 
@@ -15,10 +16,10 @@ function showPartyScreen(){
 
 function saveParty(data){
     code = data.code;
+    token = data.token;
     // save the code to local storage so it survives refresh
     localStorage.setItem("code", code);
     showPartyScreen();
-    
 }
 
 createButton.addEventListener("click", async function () {
@@ -36,3 +37,17 @@ leaveButton.addEventListener("click", function () {
 if(localStorage.getItem("code") || code){
     showPartyScreen();
 }
+
+joinButton.addEventListener("click", async function () {
+  const typedCode = codeInput.value.trim().toUpperCase();
+
+  const response = await fetch("/api/join", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ code: typedCode })
+  });
+  const data = await response.json();
+  console.log("Join response:", data);
+
+  saveParty(data);
+});
