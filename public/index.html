@@ -11,7 +11,8 @@
   <button id="leaveButton" style="display: none">Leave this party</button>
 
 
-  <div id="startScreen">
+  <div id="startScreen" class="fade-in">
+
     <button id="createButton">Create party</button>
     <p>or</p>
     <input id="codeInput" placeholder="Party code">
@@ -19,13 +20,13 @@
     <p id="errorText"></p>
   </div>
 
-  <div id="waitingScreen" style="display: none;">
+  <div id="waitingScreen" class="fade-in" style="display: none;">
     <p>Waiting for another person to join...</p>
     <p>Party code: <b id="codeText"></b></p>
     <p>Send this code to your friend!</p>
   </div>
 
-  <div id="partyScreen" style="display: none;">
+  <div id="partyScreen" class="fade-in" style="display: none;">
     <p>Click the box when you are ready to leave!</p>
     <label>
       <input type="checkbox" id="readyCheckbox">
@@ -33,7 +34,7 @@
     </label>
   </div>
 
-  <div id="LGHScreen" style="display: none;">
+  <div id="LGHScreen" class="fade-in" style="display: none;">
     <p>I hate it here... Let's go home :(</p>
   </div>
 
