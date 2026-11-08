@@ -13,26 +13,54 @@ const codeInput = document.getElementById("codeInput");
 const codeText = document.getElementById("codeText");
 const errorText = document.getElementById("errorText");
 
+function hideAllScreens(){
+    startScreen.style.display = "none";
+    waitingScreen.style.display = "none";
+    partyScreen.style.display = "none";
+    LGHScreen.style.display = "none";
+}
 
 function showWaitingScreen(){
-    // show the waiting screen and hide the current start screen
-    startScreen.style.display = "none";
+    // show the waiting screen and hide the current screen
+    hideAllScreens();
     waitingScreen.style.display = "block";
     codeText.textContent = localStorage.getItem("code");
 }
 
 function showPartyScreen(){
-    // show the party screen and hide the current waiting screen
-    waitingScreen.style.display = "none";
+    // show the party screen and hide the current screen
+    hideAllScreens();
     partyScreen.style.display = "block";
 }
 
 function showLGHScreen(){
-    // show the "let's go home" screen and hide the current party screen
-    partyScreen.style.display = "none";
+    // show the "let's go home" screen and hide the current screen
+    hideAllScreens();
     LGHScreen.style.display = "block";
 }
 
+async function checkStatus(){
+    // not in a party, so there is nothing to check
+    if(!code || !token){
+        return;
+    }
+
+    const url = "/api/status?code=" + code + "&token=" + token;
+    const response = await fetch(url);
+    const data = await response.json();
+    console.log("Status:", data);
+
+    // the party is gone (e.g. server restarted)
+    // todo
+
+    if (data.status === "no-friend") {
+        showWaitingScreen();
+    } else if (data.status === "waiting") {
+        showPartyScreen();
+    } else if (data.status === "both-ready") {
+        showLGHScreen();
+    }
+}
 
 function saveParty(data){
     code = data.code;
@@ -40,7 +68,6 @@ function saveParty(data){
     // save the code to local storage so it survives refresh
     localStorage.setItem("code", code);
     localStorage.setItem("token", token);
-    showPartyScreen();
 }
 
 createButton.addEventListener("click", async function () {
@@ -48,6 +75,7 @@ createButton.addEventListener("click", async function () {
   const data = await response.json();
   console.log("Created party:", data);
   saveParty(data);
+  showWaitingScreen();
 });
 
 leaveButton.addEventListener("click", function () {
@@ -56,9 +84,9 @@ leaveButton.addEventListener("click", function () {
     location.reload();
 })
 
-if(localStorage.getItem("code") || code){
-    showPartyScreen();
-}
+// check once right away, then every 3 seconds
+checkStatus();
+setInterval(checkStatus, 3000);
 
 joinButton.addEventListener("click", async function () {
   const typedCode = codeInput.value.trim().toUpperCase();
@@ -77,5 +105,6 @@ joinButton.addEventListener("click", async function () {
   }
 
   saveParty(data);
+  showPartyScreen();
 });
 
