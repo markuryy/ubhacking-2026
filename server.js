@@ -1,4 +1,5 @@
 const express = require("express");
+const crypto = require("crypto");
 
 const app = express();
 app.use(express.json());
@@ -22,6 +23,10 @@ function makeCode() {
     return code;
 }
 
+function makeToken() {
+  return crypto.randomBytes(16).toString("hex");
+}
+
 // Figure out if the caller is person A, person B, or nobody
 function whoIs(party, token) {
   if (!token){
@@ -38,10 +43,9 @@ function whoIs(party, token) {
 
 app.post("/api/create", function (req, res) {
     let code = makeCode();
-    const token = code + "A";
+    const token = makeToken();
 
   parties[code] = {
-    // we can make real tokens later if this becomes a problem
     tokenA: token,
     tokenB: null,
     readyA: false,
@@ -71,7 +75,7 @@ app.post("/api/join", function (req, res) {
         return;
     }
 
-    const token = req.body.code + "B";
+    const token = makeToken();
     party.tokenB = token;
 
     console.log("Someone joined party", code);
