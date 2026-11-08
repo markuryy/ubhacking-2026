@@ -37,21 +37,21 @@ function showWaitingScreen(){
     hideAllScreens();
     waitingScreen.style.display = "block";
     codeText.textContent = localStorage.getItem("code");
-    leaveButton.style.display = "block";
+    leaveButton.style.display = "inline-block";
 }
 
 function showPartyScreen(){
     // show the party screen and hide the current screen
     hideAllScreens();
     partyScreen.style.display = "block";
-    leaveButton.style.display = "block";
+    leaveButton.style.display = "inline-block";
 }
 
 function showLGHScreen(){
     // show the "let's go home" screen and hide the current screen
     hideAllScreens();
     LGHScreen.style.display = "block";
-    leaveButton.style.display = "block";
+    leaveButton.style.display = "inline-block";
 }
 
 // skipBuzz is true when the person is already looking at the screen
