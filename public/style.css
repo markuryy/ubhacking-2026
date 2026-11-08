@@ -1,12 +1,12 @@
 
 /* whole page*/
 body{
-     background: linear-gradient(#1e2a44, #4b3a6b);
+    background: linear-gradient(#1e2a44, #4b3a6b);
     min-height: 100vh;
     color : white;
     text-align: center;
     font-family: Avenir, sans-serif;
-     padding-top: 15vh;
+    padding-top: 15vh;
 }
 button{
 background-color: #ffb86b;
@@ -15,7 +15,7 @@ border: none;
 border-radius: 20px;
 padding: 10px 20px;
 font-size:10px;
-  box-shadow: 0 0 12px #ffb86b;
+box-shadow: 0 0 12px #ffb86b;
 }
 .fade-in {
 	-webkit-animation: fade-in 1.2s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
@@ -49,7 +49,7 @@ font-size:10px;
     opacity: 1;
   }
 }
-input {
+#codeInput {
   padding: 10px;
   border-radius: 20px;
   background-color: rgba(255, 255, 255, 0.1);
