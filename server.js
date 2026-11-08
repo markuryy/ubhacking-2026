@@ -22,6 +22,20 @@ function makeCode() {
     return code;
 }
 
+// Figure out if the caller is person A, person B, or nobody
+function whoIs(party, token) {
+  if (!token){
+    return null;
+  }
+  if (token === party.tokenA) {
+    return "A";
+  }
+  if (token === party.tokenB) {
+    return "B";
+  }
+  return null;
+}
+
 app.post("/api/create", function (req, res) {
     let code = makeCode();
     const token = code + "A";
@@ -66,6 +80,32 @@ app.post("/api/join", function (req, res) {
         token: token
     })
 })
+
+app.post("/api/ready", function (req, res) {
+  const code = req.body.code;
+  const token = req.body.token;
+  const ready = req.body.ready;
+  const party = parties[code];
+
+  if (!party) {
+    res.status(404).json({ error: "No party with that code" });
+    return;
+  }
+
+  const person = whoIs(party, token);
+
+  if (person === "A") {
+    party.readyA = ready;
+  } else if (person === "B") {
+    party.readyB = ready;
+  } else {
+    res.status(403).json({ error: "You are not in this party" });
+    return;
+  }
+
+  console.log("Party", code, "person", person, "ready:", ready);
+  res.json({ ok: true });
+});
 
 const port = process.env.PORT || 3000;
 app.listen(port, function () {
