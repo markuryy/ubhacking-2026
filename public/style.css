@@ -100,3 +100,35 @@ box-shadow: 0 0 12px #ffb86b;
   margin: 20px auto;
   padding: 20px;
 }
+
+/* on phones, 100vh includes the address bar, so the bottom of the frame
+   gets hidden. dvh is the height you can actually see.
+   (browsers that don't know dvh just keep the 100vh from above) */
+body {
+  min-height: 100dvh;
+  /* space so the cards don't touch the frame on the sides */
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+/* bigger text and tap area so buttons are easy to hit with a thumb.
+   font-family inherit = use Avenir like the rest of the page */
+button {
+  font-family: inherit;
+  font-size: 16px;
+  padding: 12px 24px;
+  margin: 6px;
+}
+
+/* count the padding inside the card's width so it never pokes past the screen */
+#startScreen, #waitingScreen, #partyScreen, #LGHScreen {
+  box-sizing: border-box;
+}
+
+/* the ready checkbox is the main thing people tap, so make it bigger and peach */
+#readyCheckbox {
+  width: 24px;
+  height: 24px;
+  vertical-align: middle;
+  accent-color: #ffb86b;
+}
