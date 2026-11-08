@@ -19,6 +19,14 @@ function hideAllScreens(){
     waitingScreen.style.display = "none";
     partyScreen.style.display = "none";
     LGHScreen.style.display = "none";
+
+    leaveButton.style.display = "none";
+}
+
+function showStartScreen(){
+    // show the start screen and hide the current screen (for going back to home after a party finishes)
+    hideAllScreens();
+    startScreen.style.display = "block";
 }
 
 function showWaitingScreen(){
@@ -26,18 +34,21 @@ function showWaitingScreen(){
     hideAllScreens();
     waitingScreen.style.display = "block";
     codeText.textContent = localStorage.getItem("code");
+    leaveButton.style.display = "block";
 }
 
 function showPartyScreen(){
     // show the party screen and hide the current screen
     hideAllScreens();
     partyScreen.style.display = "block";
+    leaveButton.style.display = "block";
 }
 
 function showLGHScreen(){
     // show the "let's go home" screen and hide the current screen
     hideAllScreens();
     LGHScreen.style.display = "block";
+    leaveButton.style.display = "block";
 }
 
 async function checkStatus(){
@@ -92,6 +103,7 @@ leaveButton.addEventListener("click", function () {
     localStorage.removeItem("code");
     localStorage.removeItem("token");
     location.reload();
+    showStartScreen();
 })
 
 // check once right away, then every 3 seconds
