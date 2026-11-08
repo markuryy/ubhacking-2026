@@ -107,6 +107,50 @@ app.post("/api/ready", function (req, res) {
   res.json({ ok: true });
 });
 
+app.get("/api/status", function (req, res) {
+  const code = req.query.code;
+  const token = req.query.token;
+  const party = parties[code];
+
+  if(!party){
+    res.status(404).json({
+      error: "No party with that code"
+    });
+    return;
+  }
+    
+  const person = whoIs(party, token);
+
+  if (person === null) {
+    res.status(403).json({
+      error: "You are not in this party"
+    });
+    return;
+  }
+
+  // nobody has joined yet, so person A is still waiting for a friend
+  if(party.tokenB === null) {
+    res.json({
+      status: "no-friend"
+    });
+    return;
+  }
+
+  // only say "both-ready" when BOTH flags are true
+  // never send readyA or readyB themselves
+  if(party.readyA === true && party.readyB === true) {
+    res.json({
+      status: "both-ready"
+    });
+    return;
+  }
+
+  // both players are waiting on agreement
+  res.json({
+    status: "waiting"
+  });
+})
+
 const port = process.env.PORT || 3000;
 app.listen(port, function () {
   console.log("Server running on port", port);
