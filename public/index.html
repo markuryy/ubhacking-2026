@@ -36,6 +36,11 @@
     <p>I hate it here... Let's go home :(</p>
   </div>
 
+  <!-- load the web-haptics library and put it on window so app.js can use it -->
+  <script type="module">
+    import { WebHaptics } from "https://cdn.jsdelivr.net/npm/web-haptics@0.0.6/+esm";
+    window.haptics = new WebHaptics();
+  </script>
   <script src="app.js"></script>
 </body>
 </html>

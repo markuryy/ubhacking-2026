@@ -1,6 +1,9 @@
 let code = localStorage.getItem("code");
 let token = localStorage.getItem("token");
 
+// so we only vibrate once, not on every poll after both are ready
+let hasBuzzed = false;
+
 const startScreen = document.getElementById("startScreen");
 const waitingScreen = document.getElementById("waitingScreen");
 const partyScreen = document.getElementById("partyScreen");
@@ -51,7 +54,9 @@ function showLGHScreen(){
     leaveButton.style.display = "block";
 }
 
-async function checkStatus(){
+// skipBuzz is true when the person is already looking at the screen
+// (they just tapped the checkbox, or just opened the page)
+async function checkStatus(skipBuzz){
     // not in a party, so there is nothing to check
     if(!code || !token){
         return;
@@ -80,6 +85,18 @@ async function checkStatus(){
         showPartyScreen();
     } else if (data.status === "both-ready") {
         showLGHScreen();
+
+        // only buzz the person who tapped first (they find out from a poll)
+        // the person who tapped second already sees the screen change
+        // window.haptics is set up in index.html
+        if (window.haptics && hasBuzzed === false && !skipBuzz) {
+            window.haptics.trigger("success");
+            // only the person who tapped first should see this
+            console.log("Buzz!");
+        }
+
+        // either way, don't buzz on any later polls
+        hasBuzzed = true;
     }
 }
 
@@ -107,7 +124,7 @@ leaveButton.addEventListener("click", function () {
 })
 
 // check once right away, then every 3 seconds
-checkStatus();
+checkStatus(true);
 setInterval(checkStatus, 3000);
 
 joinButton.addEventListener("click", async function () {
@@ -148,5 +165,6 @@ readyCheckbox.addEventListener("change", async function () {
     }
 
     // check right away so both-ready shows up without waiting 3 seconds
-    checkStatus();
+    // true = no buzz, since this person just tapped and is looking at the screen
+    checkStatus(true);
 });
