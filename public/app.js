@@ -7,6 +7,7 @@ const partyScreen = document.getElementById("partyScreen");
 const LGHScreen = document.getElementById("LGHScreen");
 
 const createButton = document.getElementById("createButton");
+const readyCheckbox = document.getElementById("readyCheckbox");
 const joinButton = document.getElementById("joinButton");
 const leaveButton = document.getElementById("leaveButton");
 const codeInput = document.getElementById("codeInput");
@@ -117,3 +118,23 @@ joinButton.addEventListener("click", async function () {
   showPartyScreen();
 });
 
+readyCheckbox.addEventListener("change", async function () {
+    const isReady = readyCheckbox.checked;
+    console.log("Sending ready:", isReady);
+
+    const response = await fetch("/api/ready", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ code: code, token: token, ready: isReady })
+    });
+    const data = await response.json();
+    console.log("Ready response:", data);
+
+    // if the server said no, put the checkbox back how it was
+    if (!response.ok) {
+        readyCheckbox.checked = !isReady;
+    }
+
+    // check right away so both-ready shows up without waiting 3 seconds
+    checkStatus();
+});
