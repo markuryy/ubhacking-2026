@@ -6,7 +6,7 @@ app.use(express.static("public"));
 
 // we are just going to store all the party data in memory
 // it shouldn't be a problem unless the server restarts
-const parties = [];
+const parties = {};
 
 function makeCode() {
     // use only these letters to generate codes with
@@ -23,34 +23,37 @@ function makeCode() {
 }
 
 app.post("/api/create", function (req, res) {
-  let code = makeCode();
+    let code = makeCode();
+    const token = code + "A";
 
-  /*
   parties[code] = {
     // we can make real tokens later if this becomes a problem
-    tokenA: req.body.code + "A",
+    tokenA: token,
     tokenB: null,
-    statusA: false,
-    statusB: false
+    readyA: false,
+    readyB: false
   }
-    */
   
   console.log("Created party", code);
-  res.json({ code: code });
-
+  res.json({
+    code: code,
+    token: token
+  });
 });
-/*
+
 app.post("/api/join", function (req, res) {
     const code = req.body.code;
     const party = parties[code];
 
     if(!party){
         // party doesn't exist
+        res.status(404).json({ error: "No party with that code" });
         return;
     }
 
-    if(party.body.tokenB){
+    if(party.tokenB !== null){
         // party full
+        res.status(400).json({ error: "Party is already full" });
         return;
     }
 
@@ -63,8 +66,8 @@ app.post("/api/join", function (req, res) {
         token: token
     })
 })
-*/
 
-app.listen(3000, function () {
-  console.log("Server running on port 3000");
+const port = process.env.PORT || 3000;
+app.listen(port, function () {
+  console.log("Server running on port", port);
 });
